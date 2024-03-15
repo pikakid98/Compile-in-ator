@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Off
 
-;@Ahk2Exe-Set FileVersion, 1.2.1
-;@Ahk2Exe-Set ProductVersion, 1.2.1.0
+;@Ahk2Exe-Set FileVersion, 1.2.2
+;@Ahk2Exe-Set ProductVersion, 1.2.2.0
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 
 if A_Args.Length < 1
@@ -27,13 +27,15 @@ CompileScript := IniRead(A_Temp "\FE.ini", "launch", "CompileScript")
 Loop Files, CompileScript, "F"
 SetWorkingDir A_LoopFileDir
 
-if FileExist("FE.ini") {
+if DirExist(".Cmpl8r") {
 	MsgBox "Error!, This compile script is already running. Please close the frontend first or manually run it via the command line"
 	FileDelete A_Temp "\FE.ini"
 	ExitApp
+} else {
+	DirCreate ".Cmpl8r"
 }
 
-FileMove A_Temp "\FE.ini", A_WorkingDir "\FE.ini"
+FileMove A_Temp "\FE.ini", A_WorkingDir "\.Cmpl8r\FE.ini"
 
 MyGui := Gui()
 
@@ -45,12 +47,12 @@ SetWindowTheme(MyGui)
 
 #include DarkMode.scriptlet
 
-MyGui.Title := "Compile-in-ator FE (v1.2.1)"
+MyGui.Title := "Compile-in-ator FE (v1.2.2)"
 
 myGui.OnEvent("Close", myGui_Close)
 myGui_Close(thisGui) {
-	if FileExist("FE.ini") {
-		FileDelete "FE.ini"
+	if DirExist(".Cmpl8r") {
+		DirDelete ".Cmpl8r", 1
 	}
 	ExitApp
 }
@@ -66,24 +68,24 @@ MyBtn.OnEvent("Click", MyBtn_Click)
 
 MyBtn_op1(*)
 {
-	IniWrite "Compile", "FE.ini", "launch", "RunOrEdit"
+	IniWrite "Compile", ".Cmpl8r\FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_op2(*)
 {
-	IniWrite "Text", "FE.ini", "launch", "RunOrEdit"
+	IniWrite "Text", ".Cmpl8r\FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_Click(*) {
-	WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit")
+	WhatToRun := IniRead(".Cmpl8r\FE.ini", "launch", "RunOrEdit")
 
-	if WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit", "")
+	if WhatToRun := IniRead(".Cmpl8r\FE.ini", "launch", "RunOrEdit", "")
 	{
 		MyGui.Hide()
 		
 		RunWait '"' "Data\" WhatToRun "-in-ator.exe" '"' " " '"' CompileScript '"'
 		
-		if WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit", "") {
+		if WhatToRun := IniRead(".Cmpl8r\FE.ini", "launch", "RunOrEdit", "") {
 			if not (PID := ProcessExist("Text-in-ator.exe")) {
 				if DirExist(A_Temp "\Cmpl8rTE") {
 					DirDelete A_Temp "\Cmpl8rTE", 1

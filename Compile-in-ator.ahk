@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Force
 
-;@Ahk2Exe-Set FileVersion, 1.3.0.2
-;@Ahk2Exe-Set ProductVersion, 1.3.0.2
+;@Ahk2Exe-Set FileVersion, 1.3.1
+;@Ahk2Exe-Set ProductVersion, 1.3.1
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 ;@Ahk2Exe-ConsoleApp
 
@@ -27,15 +27,26 @@ for n, param in A_Args
 		FileAppend "
 		(
 			@ECHO OFF
-			;title Compile-in-ator (v1.3.0.2)
+			;title Compile-in-ator (v1.3.1)
 			@ECHO ON
 		)", A_Temp "\Cmpl8r\main.bat"
 		
 		RunWait A_Temp "\Cmpl8r\main.bat"
-		FileCopy A_Args[1], "[CompileTemp].bat"
-		RunWait "[CompileTemp].bat"
-		FileDelete "[CompileTemp].bat"
-		DirDelete A_Temp "\Cmpl8r", 1
-		ExitApp
 		}
+		
+		if not DirExist(".Cmpl8r") {
+			DirCreate ".Cmpl8r"
+		}
+		
+		FileCopy A_Args[1], ".Cmpl8r\[CompileTemp].bat"
+		RunWait ".Cmpl8r\[CompileTemp].bat"
+		FileDelete ".Cmpl8r\[CompileTemp].bat"
+		DirDelete A_Temp "\Cmpl8r", 1
+		
+		if not (PID := ProcessExist("Compile-in-ator FE.exe")) {
+			if DirExist(".Cmpl8r") {
+					DirDelete ".Cmpl8r", 1
+				}
+			}
+	ExitApp
 }
