@@ -1,7 +1,3 @@
-rmdir "Output" /S /Q
-
-mkdir "Output"
-
 copy "..\DarkMode\DarkMode.scriptlet" ".Cmpl8r"
 
 "%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator FE.ahk" /out "Output\Compile-in-ator FE.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"

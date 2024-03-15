@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Force
 
-;@Ahk2Exe-Set FileVersion, 1.3.1
-;@Ahk2Exe-Set ProductVersion, 1.3.1
+;@Ahk2Exe-Set FileVersion, 1.3.2
+;@Ahk2Exe-Set ProductVersion, 1.3.2.0
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 ;@Ahk2Exe-ConsoleApp
 
@@ -22,12 +22,19 @@ SetWorkingDir A_LoopFileDir
 
 for n, param in A_Args
 {
+	if DirExist("Output") {
+		DirDelete "Output", 1
+		DirCreate "Output"
+	} else {
+		DirCreate "Output"
+	}
+	
 	if not DirExist(A_Temp "\Cmpl8r") {
 		DirCreate A_Temp "\Cmpl8r"
 		FileAppend "
 		(
 			@ECHO OFF
-			;title Compile-in-ator (v1.3.1)
+			;title Compile-in-ator (v1.3.2)
 			@ECHO ON
 		)", A_Temp "\Cmpl8r\main.bat"
 		
