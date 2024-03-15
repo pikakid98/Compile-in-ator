@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Off
 
-;@Ahk2Exe-Set FileVersion, 1.2.2
-;@Ahk2Exe-Set ProductVersion, 1.2.2.0
+;@Ahk2Exe-Set FileVersion, 1.2.2.1
+;@Ahk2Exe-Set ProductVersion, 1.2.2.1
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 
 if A_Args.Length < 1
@@ -45,9 +45,9 @@ SetWindowAttribute(MyGui)
 ; call dark mode for controls
 SetWindowTheme(MyGui)
 
-#include DarkMode.scriptlet
+#include .Cmpl8r\DarkMode.scriptlet
 
-MyGui.Title := "Compile-in-ator FE (v1.2.2)"
+MyGui.Title := "Compile-in-ator FE (v1.2.2.1)"
 
 myGui.OnEvent("Close", myGui_Close)
 myGui_Close(thisGui) {
