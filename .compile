@@ -1,0 +1,5 @@
+rmdir "Output" /S /Q
+
+mkdir "Output"
+
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator.ahk" /out "Output\Compile-in-ator.exe" /icon "cn8ricon.ico" /compress 1 /base "%AHK%\v2\AutoHotkey64.exe"
