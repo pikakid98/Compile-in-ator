@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Force
 
-;@Ahk2Exe-Set FileVersion, 1.3
-;@Ahk2Exe-Set ProductVersion, 1.3.0.0
+;@Ahk2Exe-Set FileVersion, v1.3.0.1
+;@Ahk2Exe-Set ProductVersion, v1.3.0.1
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 ;@Ahk2Exe-ConsoleApp
 
@@ -27,17 +27,15 @@ for n, param in A_Args
 		FileAppend "
 		(
 			@ECHO OFF
-			;title Compile-in-ator (v1.3)
+			;title Compile-in-ator (v1.3.0.1)
 			@ECHO ON
 		)", A_Temp "\Cmpl8r\main.bat"
+		
 		RunWait A_Temp "\Cmpl8r\main.bat"
 		FileCopy A_Args[1], "[CompileTemp].bat"
 		RunWait "[CompileTemp].bat"
 		FileDelete "[CompileTemp].bat"
-		
-		if not (PID := ProcessExist("turbo.exe")) {
-			DirDelete A_Temp "\Cmpl8r", 1
-			ExitApp
+		DirDelete A_Temp "\Cmpl8r", 1
+		ExitApp
 		}
-	}
 }
