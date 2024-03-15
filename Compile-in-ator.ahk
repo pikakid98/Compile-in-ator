@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Force
 
-;@Ahk2Exe-Set FileVersion, v1.3.0.1
-;@Ahk2Exe-Set ProductVersion, v1.3.0.1
+;@Ahk2Exe-Set FileVersion, 1.3.0.2
+;@Ahk2Exe-Set ProductVersion, 1.3.0.2
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 ;@Ahk2Exe-ConsoleApp
 
@@ -27,7 +27,7 @@ for n, param in A_Args
 		FileAppend "
 		(
 			@ECHO OFF
-			;title Compile-in-ator (v1.3.0.1)
+			;title Compile-in-ator (v1.3.0.2)
 			@ECHO ON
 		)", A_Temp "\Cmpl8r\main.bat"
 		
