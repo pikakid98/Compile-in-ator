@@ -1,10 +1,10 @@
 # Compile-in-ator
  A pointless and overly complicated way of renaming batch scripts that compile other scripts inspired by things like Make Cmake etc.
-\
+
 This version and all subsequent versions include the [Turbo](https://github.com/magiblot/turbo) text editor by Magiblot. However, the source code does NOT include it. You'll need to download and/or compile it yourself
-\
+
 Please also be aware that the base compile file assumes you have my forked Dark Mode for AHK-v2 script downloaded and in a folder above in a folder called "DarkMode". If you would prefer it to all be in the same folder, You can simply edit the .compile script (Please be aware that this tool requires you to have SOME knowledge of Batch.. Not to be confused with Bash)
-\
+
 Another recommendation would be to associate `.compile` files with `Compile-in-ator FE.exe`. That's specifically the frontend
 
 
