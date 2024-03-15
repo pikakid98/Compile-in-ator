@@ -2,4 +2,18 @@ rmdir "Output" /S /Q
 
 mkdir "Output"
 
-"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator.ahk" /out "Output\Compile-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+copy "..\DarkMode\DarkMode.scriptlet" "%CD%"
+
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator FE.ahk" /out "Output\Compile-in-ator FE.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+
+del "DarkMode.scriptlet" /S /Q
+
+mkdir "Output\Data"
+
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator.ahk" /out "Output\Data\Compile-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+
+"%sevenz%" x "Turbo.7z"
+
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Text-in-ator.ahk" /out "Output\Data\Text-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+
+del "turbo.exe" /S /Q
