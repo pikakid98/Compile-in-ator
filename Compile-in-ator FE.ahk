@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Off
 
-;@Ahk2Exe-Set FileVersion, 1.1.0
-;@Ahk2Exe-Set ProductVersion, 1.1.0.0
+;@Ahk2Exe-Set FileVersion, 1.2
+;@Ahk2Exe-Set ProductVersion, 1.2.0.0
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 
 if not DirExist(A_Temp "\Cmpl8rFE") {
@@ -43,7 +43,7 @@ SetWindowTheme(MyGui)
 
 #include DarkMode.scriptlet
 
-MyGui.Title := "Compile-in-ator FE (v1.1)"
+MyGui.Title := "Compile-in-ator FE (v1.2)"
 
 myGui.OnEvent("Close", myGui_Close)
 myGui_Close(thisGui) {
@@ -67,7 +67,7 @@ MyBtn_op1(*)
 	if not DirExist(A_Temp "\Cmpl8rFE") {
 		DirCreate A_Temp "\Cmpl8rFE"
 	}
-	IniWrite "Data\Compile-in-ator.exe", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
+	IniWrite "Compile", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_op2(*)
@@ -75,7 +75,7 @@ MyBtn_op2(*)
 	if not DirExist(A_Temp "\Cmpl8rFE") {
 		DirCreate A_Temp "\Cmpl8rFE"
 	}
-	IniWrite "Data\Text-in-ator.exe", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
+	IniWrite "Text", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_Click(*) {
@@ -84,17 +84,26 @@ MyBtn_Click(*) {
 	if WhatToRun := IniRead(A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit", "")
 	{
 		MyGui.Hide()
-		RunWait '"' WhatToRun '"' " " '"' CompileScript '"'
-			
-		if WhatToRun := IniRead(A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit", "Data\Text-in-ator.exe")
-		{
-			if not (PID := ProcessExist("turbo.exe")) {
-				DirDelete A_Temp "\Cmpl8rTE", 1
+		Run '"' "Data\" WhatToRun "-in-ator.exe" '"' " " '"' CompileScript '"'
+		
+		if (PID := ProcessExist("Compile-in-ator.exe")) {
+			if DirExist(A_Temp "\Cmpl8rFE") {
+				DirDelete A_Temp "\Cmpl8rFE", 1
 			}
-			MyGui.Show()
-		} else {
 			ExitApp
 		}
+		
+		if (PID := ProcessExist("Text-in-ator.exe")) {
+			PID := ProcessWaitClose("Text-in-ator.exe")
+		}
+		
+		if not (PID := ProcessExist("turbo.exe")) {
+			if DirExist(A_Temp "\Cmpl8rTE") {
+				DirDelete A_Temp "\Cmpl8rTE", 1
+			}
+		}
+		
+		MyGui.Show()
 	} else {
 		MsgBox "Error! Please select an option", "Error!"
 	}
