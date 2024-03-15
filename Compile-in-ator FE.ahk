@@ -2,13 +2,9 @@
 #NoTrayIcon
 #SingleInstance Off
 
-;@Ahk2Exe-Set FileVersion, 1.2
-;@Ahk2Exe-Set ProductVersion, 1.2.0.0
+;@Ahk2Exe-Set FileVersion, 1.2.1
+;@Ahk2Exe-Set ProductVersion, 1.2.1.0
 ;@Ahk2Exe-Set CompanyName, Pikakid98
-
-if not DirExist(A_Temp "\Cmpl8rFE") {
-	DirCreate A_Temp "\Cmpl8rFE"
-}
 
 if A_Args.Length < 1
 {
@@ -16,22 +12,28 @@ if A_Args.Length < 1
 	if SelectedFile = "" {
 		ExitApp
 	} else {
-		DirCreate A_Temp "\Cmpl8rFE"
-		IniWrite "", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
-		IniWrite '"' SelectedFile '"', A_Temp "\Cmpl8rFE\FE.ini", "launch", "CompileScript"
+		IniWrite "", A_Temp "\FE.ini", "launch", "RunOrEdit"
+		IniWrite '"' SelectedFile '"', A_Temp "\FE.ini", "launch", "CompileScript"
 	}
 }
 
 if A_Args.Length = 1 {
-	DirCreate A_Temp "\Cmpl8rFE"
-	IniWrite "", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
-	IniWrite '"' A_Args[1] '"', A_Temp "\Cmpl8rFE\FE.ini", "launch", "CompileScript"
+	IniWrite "", A_Temp "\FE.ini", "launch", "RunOrEdit"
+	IniWrite '"' A_Args[1] '"', A_Temp "\FE.ini", "launch", "CompileScript"
 }
 
-CompileScript := IniRead(A_Temp "\Cmpl8rFE\FE.ini", "launch", "CompileScript")
+CompileScript := IniRead(A_Temp "\FE.ini", "launch", "CompileScript")
 
 Loop Files, CompileScript, "F"
 SetWorkingDir A_LoopFileDir
+
+if FileExist("FE.ini") {
+	MsgBox "Error!, This compile script is already running. Please close the frontend first or manually run it via the command line"
+	FileDelete A_Temp "\FE.ini"
+	ExitApp
+}
+
+FileMove A_Temp "\FE.ini", A_WorkingDir "\FE.ini"
 
 MyGui := Gui()
 
@@ -43,12 +45,12 @@ SetWindowTheme(MyGui)
 
 #include DarkMode.scriptlet
 
-MyGui.Title := "Compile-in-ator FE (v1.2)"
+MyGui.Title := "Compile-in-ator FE (v1.2.1)"
 
 myGui.OnEvent("Close", myGui_Close)
 myGui_Close(thisGui) {
-	if DirExist(A_Temp "\Cmpl8rFE") {
-		DirDelete A_Temp "\Cmpl8rFE", 1
+	if FileExist("FE.ini") {
+		FileDelete "FE.ini"
 	}
 	ExitApp
 }
@@ -64,45 +66,30 @@ MyBtn.OnEvent("Click", MyBtn_Click)
 
 MyBtn_op1(*)
 {
-	if not DirExist(A_Temp "\Cmpl8rFE") {
-		DirCreate A_Temp "\Cmpl8rFE"
-	}
-	IniWrite "Compile", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
+	IniWrite "Compile", "FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_op2(*)
 {
-	if not DirExist(A_Temp "\Cmpl8rFE") {
-		DirCreate A_Temp "\Cmpl8rFE"
-	}
-	IniWrite "Text", A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit"
+	IniWrite "Text", "FE.ini", "launch", "RunOrEdit"
 }
 
 MyBtn_Click(*) {
-	WhatToRun := IniRead(A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit")
+	WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit")
 
-	if WhatToRun := IniRead(A_Temp "\Cmpl8rFE\FE.ini", "launch", "RunOrEdit", "")
+	if WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit", "")
 	{
 		MyGui.Hide()
-		Run '"' "Data\" WhatToRun "-in-ator.exe" '"' " " '"' CompileScript '"'
 		
-		if (PID := ProcessExist("Compile-in-ator.exe")) {
-			if DirExist(A_Temp "\Cmpl8rFE") {
-				DirDelete A_Temp "\Cmpl8rFE", 1
+		RunWait '"' "Data\" WhatToRun "-in-ator.exe" '"' " " '"' CompileScript '"'
+		
+		if WhatToRun := IniRead("FE.ini", "launch", "RunOrEdit", "") {
+			if not (PID := ProcessExist("Text-in-ator.exe")) {
+				if DirExist(A_Temp "\Cmpl8rTE") {
+					DirDelete A_Temp "\Cmpl8rTE", 1
+					}
+				}
 			}
-			ExitApp
-		}
-		
-		if (PID := ProcessExist("Text-in-ator.exe")) {
-			PID := ProcessWaitClose("Text-in-ator.exe")
-		}
-		
-		if not (PID := ProcessExist("turbo.exe")) {
-			if DirExist(A_Temp "\Cmpl8rTE") {
-				DirDelete A_Temp "\Cmpl8rTE", 1
-			}
-		}
-		
 		MyGui.Show()
 	} else {
 		MsgBox "Error! Please select an option", "Error!"
