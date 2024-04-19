@@ -7,6 +7,32 @@ Please also be aware that the base compile file assumes you have my forked Dark 
 
 Another recommendation would be to associate `.compile` files with `Compile-in-ator FE.exe`. That's specifically the frontend
 
+# Known issue
+There's an issue when trying to run the compiler from in a sub-script.. Example, you're compiling one program which calls to another .compile file from within.. Doing this causes a weird issue which I'm still trying to figure out. For now, Please include this in your code
+
+<details>
+<summary>Click here to expand</summary>
+
+```
+PUSHD "%CD%"
+
+cd "{PATH}"
+mkdir ".Cmpl8r"
+copy ".compile" ".Cmpl8r"
+ren ".Cmpl8r\.compile" "[CompileTemp].bat"
+call ".Cmpl8r\[CompileTemp].bat"
+rmdir ".Cmpl8r" /S /Q
+
+POPD
+
+robocopy "{PATH}\Output" "Output" /MIR
+
+rmdir "{PATH}\Output" /S /Q
+```
+
+Make sure to replace `{PATH}` with the actual path
+
+</details>
 
 # Build requirements
 [AutoHotkey (v2)](https://github.com/AutoHotkey/AutoHotkey)
