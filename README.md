@@ -41,7 +41,7 @@ Make sure to replace `{PATH}` with the actual path
 \
 [Upx](https://github.com/upx/upx)
 \
-[Dark Mode for AHK-v2](https://github.com/Git-Pikakid98/Dark-Mode-For-AHK-v2)
+[Dark Mode for AHK-v2](https://github.com/pikakid98/Dark-Mode-For-AHK-v2)
 \
 [Turbo](https://github.com/magiblot/turbo)
 
