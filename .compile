@@ -1,15 +1,12 @@
-copy "..\DarkMode\DarkMode.scriptlet" ".Cmpl8r"
+::-------------------------------------------------------------------------------------
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator.ahk" /out "Output\Compile-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+::-------------------------------------------------------------------------------------
 
-"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator FE.ahk" /out "Output\Compile-in-ator FE.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
 
-del ".Cmpl8r\DarkMode.scriptlet" /S /Q
+::-------------------------------------------------------------------------------------
+copy "..\..\Binaries\turbo.exe" ".Cmpl8r"
 
-mkdir "Output\Data"
-
-"%AHK%\Compiler\Ahk2Exe.exe" /in "Compile-in-ator.ahk" /out "Output\Data\Compile-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
-
-"%sevenz%" x "Turbo.7z" -o".Cmpl8r"
-
-"%AHK%\Compiler\Ahk2Exe.exe" /in "Text-in-ator.ahk" /out "Output\Data\Text-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
+"%AHK%\Compiler\Ahk2Exe.exe" /in "Text-in-ator.ahk" /out "Output\Text-in-ator.exe" /icon "cn8ricon.ico" /compress 2 /base "%AHK%\v2\AutoHotkey64.exe"
 
 del ".Cmpl8r\turbo.exe" /S /Q
+::-------------------------------------------------------------------------------------
