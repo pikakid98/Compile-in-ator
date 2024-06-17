@@ -2,8 +2,8 @@
 #NoTrayIcon
 #SingleInstance Off
 
-;@Ahk2Exe-Set FileVersion, 1.4-Dev
-;@Ahk2Exe-Set ProductVersion, 1.4.0.0-Dev
+;@Ahk2Exe-Set FileVersion, 1.4.0.1-Dev
+;@Ahk2Exe-Set ProductVersion, 1.4.0.1-Dev
 ;@Ahk2Exe-Set CompanyName, Pikakid98
 ;@Ahk2Exe-ConsoleApp
 
