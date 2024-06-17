@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v2.0
 #NoTrayIcon
-#SingleInstance Force
+#SingleInstance Off
 
 ;@Ahk2Exe-Set FileVersion, 1.4-Dev
 ;@Ahk2Exe-Set ProductVersion, 1.4.0.0-Dev
